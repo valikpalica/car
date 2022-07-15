@@ -1,0 +1,36 @@
+{
+    "ru":[
+        {
+            "text":"то/ремонт авто",
+            "value":"fix_car"
+        },
+        {
+            "text":"кузовной ремонт",
+            "value":"body_repair"
+        },
+        {
+            "text":"шиномонтаж",
+            "value":"tire_fitting"
+        },
+        {
+            "text":"авто тюнинг",
+            "value":"auto_tuning"
+        },
+        {
+            "text":"запчасти",
+            "value":"spare_parts"
+        },
+        {
+            "text":"эвакуатор",
+            "value":"tow_truck"
+        },
+        {
+            "text":"детейлинг",
+            "value":"detailing"
+        },
+        {
+            "text":"автомойка",
+            "value":"car_wash"
+        }
+    ]
+}

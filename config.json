@@ -1,0 +1,4 @@
+{
+    "secret":"publicKey",
+    "jwt_secret":"secret"
+}

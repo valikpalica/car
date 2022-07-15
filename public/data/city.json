@@ -1,0 +1,32 @@
+{
+    "ru":[
+        {
+            "text":"Киев",
+            "value":"Kyiv"
+        },
+        {
+            "text":"Чернигов",
+            "value":"Chernihiv"
+        },
+        {
+            "text":"Харьков",
+            "value":"Kharkiv"
+        },
+        {
+            "text":"Львов",
+            "value":"Lviv"
+        },
+        {
+            "text":"Одесса",
+            "value":"Odessa"
+        },
+        {
+            "text":"Днипро",
+            "value":"Dnipro"
+        },
+        {
+            "text":"Винница",
+            "value":"Vinnitsa"
+        }
+    ]
+}
