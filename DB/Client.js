@@ -66,7 +66,7 @@ class Clients {
         })
     });
     getClientTask = (id_client) => new Promise((resolve, reject) => {
-        Task.findOne({id_client}).then(data=>{
+        Task.find({id_client}).then(data=>{
             resolve(data)
         }).catch(e=>{
             reject(e);
@@ -96,6 +96,18 @@ class Clients {
         }).catch(e=>{
             reject(e);
         });
+    });
+    getInormationForTask = (id) => new Promise((resolve, reject) => {
+        Task.findOne({_id:id_client}).then(data=>{
+            resolve(data)
+        }).catch(e=>{reject(e)});
+    });
+    getInformationFromSto = (id) => new Promise((resolve, reject) => {
+        STO.findOne({_id:id}).then(data=>{
+            resolve(data);
+        }).catch(e=>{
+            reject(e);
+        })
     });
 };
 

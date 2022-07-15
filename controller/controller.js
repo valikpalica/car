@@ -228,6 +228,14 @@ class Controller {
             res.status(400).json({e:e.message});
         })
     }
+    getTask = (req,res)=>{
+        let {id} = req.body;
+        Client.getInormationForTask(id).then(data=>{
+            res.status(200).json({data});
+        }).catch(e=>{
+            res.status(400).json({e:e.message});
+        })
+    };
     cancelTask = (req,res) =>{
         let {id,point} = req.body
         Client.cancelTask(id,point).then(data=>{
@@ -313,6 +321,14 @@ class Controller {
             else{
                 res.status(400).json({e:'status not found'});
             }
+        }).catch(e=>{
+            res.status(400).json({e:e.message});
+        });
+    };
+    getInormationForSTO = (req,res) =>{
+        let {id} = req.body;
+        Client.getInformationFromSto(id).then(data=>{
+            res.status(200).json({data});
         }).catch(e=>{
             res.status(400).json({e:e.message});
         });

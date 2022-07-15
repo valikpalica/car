@@ -15,7 +15,8 @@ app.use('/',verification);
 
 app.use('/main',midleware);
 app.use('/static',express.static(path.join(__dirname,'public')));
-app.use('/main/image',express.static(path.join(__dirname,'image')));
+app.use('/avatar',express.static(path.join(__dirname,'image')));
+app.use('/taskImage',express.static(path.join(__dirname,'taskImage')));
 app.use('/main/client',client);
 app.use('/main/sto',sto);
 

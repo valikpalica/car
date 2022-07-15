@@ -15,5 +15,8 @@ router.post('/cancelTask',Controller.cancelTask);
 router.post('/setSTOforTask',Controller.checkSTOforTask);
 router.post('/prepateToChangeNumber',Controller.prapareToChangeNumber);
 router.post('/changeNumber',Controller.changeNumber);
+router.post('/getMyTasks',Controller.getMyTask);
+router.post('/getTask',Controller.getTask);
+router.post('/getInfoemationFromSto',Controller.getInormationForSTO)
 
 module.exports = router;
