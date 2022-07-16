@@ -178,8 +178,8 @@ class Controller {
     updateClient = (req,res) =>{
         let {id,data} = req.body;
         if(req.file){
-            console.log(req.file.filename);
-            data['avatar'] = req.file.filename;
+            console.log(req.file);
+            data['avatar'] = req.file.originalname;
         }
         Client.updateClient(id,data).then(data=>{
             res.status(200).json({data});
@@ -202,7 +202,7 @@ class Controller {
     createTask = (req,res) =>{
         let data = req.body;
         if(req.file){
-            data['image'] = req.file.filename;
+            data['image'] = req.file.originalname;
         }
         data['time_client'] = new Date(data['time_client']);
         Client.createTask(data).then(data=>{
