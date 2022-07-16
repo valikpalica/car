@@ -27,7 +27,7 @@ const ShemaSTO = new Schema({
 const ShemaCars = new Schema({
     name:String,
     types:String,
-    fuel:String,
+    fuell:String,
     volume:String,
     year:Date,
     vinCode:String,
