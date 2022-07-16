@@ -59,6 +59,7 @@ class Controller {
                                     await Client.changeAppToken(data_obj.id,app_token);
                                     data_obj.app_token = app_token
                                 }
+                                res.status(200).json({jwt_token,data_obj,exist});
                             }
                             else{
                                 res.status(200).json({text:'client not found',exist});
@@ -72,6 +73,7 @@ class Controller {
                                     await STO.changeAppToken(data_obj.id,app_token);
                                     data_obj.app_token = app_token
                                 }
+                                res.status(200).json({jwt_token,data_obj,exist});
                             }
                             else{
                                 res.status(200).json({text:'sto not found',exist});
@@ -80,7 +82,6 @@ class Controller {
                         else{
                             throw new Error('status not found');
                         }
-                        res.status(200).json({jwt_token,data_obj,exist});
                 }
                 else{
                     throw new Error('token not equal');
@@ -89,7 +90,8 @@ class Controller {
             else{
                 throw new Error('number not found');
             }
-        }).catch(e=>{
+        })
+        .catch(e=>{
             res.status(400).json({e:e.message});
         })
     };
