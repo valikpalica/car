@@ -304,6 +304,8 @@ class Controller {
     changeNumber = (req,res) =>{
         let {otp_token,id_user,status,number} = req.body;
         Verifies.find(number).then(data=>{
+            console.log(`otp_token ${otp_token} id_user ${id_user} status ${status} number ${number}`);
+            console.log(data);
             data.forEach(async(element) => {
                 if(decodeOtp(otp_token)===decodeOtp(element.otp)){
                    await Verifies.delete(number);
@@ -312,7 +314,7 @@ class Controller {
                     res.status(400).json({e:'otp code not found'});
                 }
             });
-            
+
             if(status==='client'){
                 Client.updateClient(id_user,{number}).then(data=>{
                     res.status(200).json({data});
