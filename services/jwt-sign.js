@@ -5,7 +5,7 @@ const {jwt_secret} = require('../config.json')
 create_jwt = (phone) => {
     let token = jwt.sign({
         phone
-    },jwt_secret,{expiresIn:'1h'});
+    },jwt_secret,{expiresIn:'24h'});
     return token;
 }
 
