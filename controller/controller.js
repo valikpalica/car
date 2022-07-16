@@ -35,6 +35,7 @@ class Controller {
     };
     checkOTPClient = (req,res) =>{
         let {otp_token,number,status,app_token} = req.body;
+        console.log(`${otp_token} ${number}  ${status}  ${app_token}`);
         Verifies.find(number).then(async(data)=>{
             if(data.length>0){
                 let otp_verificarion = false;
@@ -44,12 +45,14 @@ class Controller {
                         await Verifies.delete(number);
                     }
                 });
+                console.log(`otp_verificarion ${otp_verificarion}`);
                 if(otp_verificarion){
                         let jwt_token = jwt_sign(number);
                         let exist = false;
                         let data_obj;
                         if(status === "client"){
                             data_obj = await Client.findByPhone(number);
+                            console.log(`data_obj ${data_obj}`);
                             if(data_obj){
                                 exist = true;
                                 if(data_obj.app_token!==app_token){
