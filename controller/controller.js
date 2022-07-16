@@ -66,7 +66,7 @@ class Controller {
                         }
                         else if (status === 'sto'){
                             data_obj = await STO.findByPhone(number);
-                            if(data_obj){
+                            if(data_obj){ 
                                 exist = true
                                 if(data_obj.app_token!== app_token){
                                     await STO.changeAppToken(data_obj.id,app_token);
