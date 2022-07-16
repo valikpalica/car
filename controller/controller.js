@@ -179,7 +179,7 @@ class Controller {
         let {id,data} = req.body;
         if(req.file){
             console.log(req.file);
-            data['avatar'] = req.file.originalname;
+            data['avatar'] = req.file.filename;
         }
         Client.updateClient(id,data).then(data=>{
             res.status(200).json({data});
