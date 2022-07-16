@@ -181,6 +181,7 @@ class Controller {
             res.status(400).json({e:e.message});
         })
     }
+    
     updateAdmin = (req,res) =>{
         let {id,data} = req.body;
         if(req.file){
