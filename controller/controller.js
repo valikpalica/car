@@ -312,6 +312,7 @@ class Controller {
                     res.status(400).json({e:'otp code not found'});
                 }
             });
+            
             if(status==='client'){
                 Client.updateClient(id_user,{number}).then(data=>{
                     res.status(200).json({data});
