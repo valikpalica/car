@@ -61,7 +61,7 @@ class Controller {
                                 }
                             }
                             else{
-                                res.status(400).json({text:'client not found',exist});
+                                res.status(200).json({text:'client not found',exist});
                             }
                         }
                         else if (status === 'sto'){
@@ -74,7 +74,7 @@ class Controller {
                                 }
                             }
                             else{
-                                res.status(400).json({text:'sto not found',exist});
+                                res.status(200).json({text:'sto not found',exist});
                             }
                         }
                         else{
