@@ -32,7 +32,7 @@ class Controller {
             res.status(400).json({e:e.message});
         })
     };
-    checkOTPClient = (req,res) =>{
+    checkOTPClient = async (req,res) =>{
         let {otp_token,number,status,app_token} = req.body;
         console.log(`${otp_token} ${number}  ${status}  ${app_token}`);
         if(otp_token==='1111'){
