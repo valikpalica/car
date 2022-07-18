@@ -376,6 +376,10 @@ class Controller {
             res.status(400).json({e:e.message});
         });
     };
+    getTasksSTO = (req,res) =>{
+        let {id} = req.body;
+        
+    }
 };
 
 

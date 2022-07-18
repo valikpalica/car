@@ -12,6 +12,13 @@ class STO_DB {
             reject(e);
         })
     });
+    findById = (id) => new Promise((resolve, reject) => {
+        STO.findOne({_id:id}).then(data=>{
+            resolve(data);
+        }).catch(e=>{
+            reject(e);
+        });
+    });
     findByPhone = (number) => new Promise((resolve, reject) => {
         STO.findOne({number}).then(data=>{
             resolve(data);
