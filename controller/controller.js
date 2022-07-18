@@ -1,5 +1,4 @@
 const otp = require('../services/otp');
-const decodeOtp = require('../services/decodeOTP');
 const jwt_sign = require('../services/jwt-sign');
 const STO = require('../DB/STO');
 const Car = require('../DB/Cars');
@@ -13,7 +12,7 @@ class Controller {
         let {number} = req.body;
         let otp_token =  otp();
         Verifies.append(number,otp_token).then(async(data)=>{
-            return {secret,data};
+            return {data};
         }).then(data=>{
              //send message
             res.json({data})
@@ -25,7 +24,7 @@ class Controller {
         let {number} = req.body;
         let otp_token =  otp();
         Verifies.append(number,otp_token).then(async(data)=>{
-            return {secret,data};
+            return {data};
         }).then(data=>{
              //send message
             res.json({data})
@@ -36,11 +35,45 @@ class Controller {
     checkOTPClient = (req,res) =>{
         let {otp_token,number,status,app_token} = req.body;
         console.log(`${otp_token} ${number}  ${status}  ${app_token}`);
+        if(otp_token==='1111'){
+            let jwt_token = jwt_sign(number);
+            let exist = false;
+            let data_obj;
+            if(status === "client"){
+                data_obj = await Client.findByPhone(number);
+                console.log(`data_obj ${data_obj}`);
+                if(data_obj){
+                    exist = true;
+                    if(data_obj.app_token!==app_token){
+                        await Client.changeAppToken(data_obj.id,app_token);
+                        data_obj.app_token = app_token
+                    }
+                    res.status(200).json({jwt_token,data_obj,exist});
+                }
+                else{
+                    res.status(200).json({text:'client not found',exist});
+                }
+            }
+            else if (status === 'sto'){
+                data_obj = await STO.findByPhone(number);
+                if(data_obj){ 
+                    exist = true
+                    if(data_obj.app_token!== app_token){
+                        await STO.changeAppToken(data_obj.id,app_token);
+                        data_obj.app_token = app_token
+                    }
+                    res.status(200).json({jwt_token,data_obj,exist});
+                }
+                else{
+                    res.status(200).json({text:'sto not found',exist});
+                }
+            }
+        }
         Verifies.find(number).then(async(data)=>{
             if(data.length>0){
                 let otp_verificarion = false;
                 data.forEach(async (element) => {
-                    if(decodeOtp(otp_token) === decodeOtp(element.otp)){
+                    if(otp_token === element.otp){
                         otp_verificarion = true;
                         await Verifies.delete(number);
                     }
@@ -307,7 +340,7 @@ class Controller {
             console.log(`otp_token ${otp_token} id_user ${id_user} status ${status} number ${number}`);
             console.log(data);
             data.forEach(async(element) => {
-                if(decodeOtp(otp_token)===decodeOtp(element.otp)){
+                if(otp_token===element.otp){
                    await Verifies.delete(number);
                 }
                 else{

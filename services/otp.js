@@ -8,8 +8,8 @@ generateOTP = () =>{
         upperCaseAlphabets:false,
         lowerCaseAlphabets:false,
     });
-    const hash = CryptoJS.AES.encrypt(otp,secret).toString();
-    return hash
+    //const hash = CryptoJS.AES.encrypt(otp,secret).toString();
+    return otp
 }
 
 module.exports = generateOTP;
