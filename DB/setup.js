@@ -138,8 +138,6 @@ const Client = mongoose.model('Client',ShemaClient);
 const Verify = mongoose.model('Verify',ShemaVerify);
 const Task  = mongoose.model('Task',ShemaTask);
 
-
-
 module.exports = {
     STO,
     Car,
