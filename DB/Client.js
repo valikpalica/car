@@ -65,6 +65,16 @@ class Clients {
             reject(e);
         })
     });
+    deleteAccount = (id) => new Promise((resolve, reject) => {
+        let result = {};
+        Client.findOneAndRemove({_id:id}).then(async(data)=>{
+            result['client'] = data;
+            result['car'] = await Car.deleteMany({id_user:id});
+            resolve(result);
+        }).catch(e=>{
+            reject(e);
+        })
+    });
     getClientTask = (id_client) => new Promise((resolve, reject) => {
         Task.find({id_client}).then(data=>{
             resolve(data)
@@ -81,7 +91,6 @@ class Clients {
     });
     cancelTask = (id,point) => new Promise((resolve, reject) => {
         Task.findOneAndUpdate({_id:id},{
-            isActive:false,
             point,
         },{new:true}).then(data=>{
             resolve(data);
@@ -98,7 +107,7 @@ class Clients {
         });
     });
     getInormationForTask = (id) => new Promise((resolve, reject) => {
-        Task.findOne({_id:id_client}).then(data=>{
+        Task.findOne({_id:id}).then(data=>{
             resolve(data)
         }).catch(e=>{reject(e)});
     });
@@ -107,7 +116,7 @@ class Clients {
             resolve(data);
         }).catch(e=>{
             reject(e);
-        })
+        });
     });
 };
 

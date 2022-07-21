@@ -4,7 +4,6 @@ const STO = require('../DB/STO');
 const Car = require('../DB/Cars');
 const Client = require('../DB/Client');
 const Verifies = require('../DB/verify');
-const {secret} = require('../config.json');
 
 
 class Controller {
@@ -69,64 +68,66 @@ class Controller {
                 }
             }
         }
-        Verifies.find(number).then(async(data)=>{
-            if(data.length>0){
-                let otp_verificarion = false;
-                data.forEach(async (element) => {
-                    if(otp_token === element.otp){
-                        otp_verificarion = true;
-                        await Verifies.delete(number);
+        else{
+            Verifies.find(number).then(async(data)=>{
+                if(data.length>0){
+                    let otp_verificarion = false;
+                    data.forEach(async (element) => {
+                        if(otp_token === element.otp){
+                            otp_verificarion = true;
+                            await Verifies.delete(number);
+                        }
+                    });
+                    console.log(`otp_verificarion ${otp_verificarion}`);
+                    if(otp_verificarion){
+                            let jwt_token = jwt_sign(number);
+                            let exist = false;
+                            let data_obj;
+                            if(status === "client"){
+                                data_obj = await Client.findByPhone(number);
+                                console.log(`data_obj ${data_obj}`);
+                                if(data_obj){
+                                    exist = true;
+                                    if(data_obj.app_token!==app_token){
+                                        await Client.changeAppToken(data_obj.id,app_token);
+                                        data_obj.app_token = app_token
+                                    }
+                                    res.status(200).json({jwt_token,data_obj,exist});
+                                }
+                                else{
+                                    res.status(200).json({text:'client not found',exist});
+                                }
+                            }
+                            else if (status === 'sto'){
+                                data_obj = await STO.findByPhone(number);
+                                if(data_obj){ 
+                                    exist = true
+                                    if(data_obj.app_token!== app_token){
+                                        await STO.changeAppToken(data_obj.id,app_token);
+                                        data_obj.app_token = app_token
+                                    }
+                                    res.status(200).json({jwt_token,data_obj,exist});
+                                }
+                                else{
+                                    res.status(200).json({text:'sto not found',exist});
+                                }
+                            }
+                            else{
+                                throw new Error('status not found');
+                            }
                     }
-                });
-                console.log(`otp_verificarion ${otp_verificarion}`);
-                if(otp_verificarion){
-                        let jwt_token = jwt_sign(number);
-                        let exist = false;
-                        let data_obj;
-                        if(status === "client"){
-                            data_obj = await Client.findByPhone(number);
-                            console.log(`data_obj ${data_obj}`);
-                            if(data_obj){
-                                exist = true;
-                                if(data_obj.app_token!==app_token){
-                                    await Client.changeAppToken(data_obj.id,app_token);
-                                    data_obj.app_token = app_token
-                                }
-                                res.status(200).json({jwt_token,data_obj,exist});
-                            }
-                            else{
-                                res.status(200).json({text:'client not found',exist});
-                            }
-                        }
-                        else if (status === 'sto'){
-                            data_obj = await STO.findByPhone(number);
-                            if(data_obj){ 
-                                exist = true
-                                if(data_obj.app_token!== app_token){
-                                    await STO.changeAppToken(data_obj.id,app_token);
-                                    data_obj.app_token = app_token
-                                }
-                                res.status(200).json({jwt_token,data_obj,exist});
-                            }
-                            else{
-                                res.status(200).json({text:'sto not found',exist});
-                            }
-                        }
-                        else{
-                            throw new Error('status not found');
-                        }
+                    else{
+                        throw new Error('token not equal');
+                    }
                 }
                 else{
-                    throw new Error('token not equal');
+                    throw new Error('number not found');
                 }
-            }
-            else{
-                throw new Error('number not found');
-            }
-        })
-        .catch(e=>{
-            res.status(400).json({e:e.message});
-        })
+            })
+            .catch(e=>{
+                res.status(400).json({e:e.message});
+            })
+        }
     };
     createSTO = (req,res) =>{
         let {number} = req.body;
@@ -221,7 +222,7 @@ class Controller {
         })
     }
 
-    updateAdmin = (req,res) =>{
+    updateSTO = (req,res) =>{
         let {id,data} = req.body;
         if(req.file){
             data['avatar'] = req.file.filename;
@@ -252,6 +253,14 @@ class Controller {
             res.status(400).json({e:e.message});
         });
     };
+    deleteAccountClient = (req,res) =>{
+        let {id} = req.body;
+        Client.deleteAccount(id).then(data=>{
+            res.status(200).json({data});
+        }).catch(e=>{
+            res.status(400).json({e:e.message});
+        })
+    };
     disableAccountSTO = (req,res) =>{
         let {app_token} = req.body;
         STO.disableAccount(app_token).then(data=>{
@@ -260,7 +269,7 @@ class Controller {
             res.status(400).json({e:e.message});
         })
     }
-    getMyTask = (req,res) =>{
+    getMyTaskClient = (req,res) =>{
         let {id_client} = req.body;
         Client.getClientTask(id_client).then(data=>{
             res.status(200).json({data});
@@ -268,7 +277,7 @@ class Controller {
             res.status(400).json({e:e.message});
         })
     }
-    getTask = (req,res)=>{
+    getTaskClient = (req,res)=>{
         let {id} = req.body;
         Client.getInormationForTask(id).then(data=>{
             res.status(200).json({data});
@@ -276,7 +285,7 @@ class Controller {
             res.status(400).json({e:e.message});
         })
     };
-    cancelTask = (req,res) =>{
+    setPointClient = (req,res) =>{
         let {id,point} = req.body
         Client.cancelTask(id,point).then(data=>{
             res.status(200).json({data})
@@ -284,7 +293,7 @@ class Controller {
             res.status(400).json({e:e.message});
         })
     };
-    deleteTask = (req,res) =>{
+    deleteTaskClient = (req,res) =>{
         let {id} = req.body
         Client.deleteTask(id).then(data=>{
             res.status(200).json({data});
@@ -292,7 +301,7 @@ class Controller {
             res.status(400).json({e:e.message});
         });
     };
-    checkSTOforTask = (req,res) =>{
+    setSTOforTaskClient = (req,res) =>{
         let {id,id_sto} = req.body
         Client.checkSTOforTask(id,id_sto).then(data=>{
             res.status(200).json({data});
@@ -376,10 +385,81 @@ class Controller {
             res.status(400).json({e:e.message});
         });
     };
+    setParamsToTaskFromSTO = (req,res) =>{
+        let {id,data} = req.body;
+        STO.SetParametersToTask(id,data).then(data=>{
+            res.status(200).json({data});
+        }).catch(e=>{
+            res.status(400).json({e:e.message});
+        });
+    };
+    appendServiceSTO = (req,res) =>{
+        let {id,service} = req.body;
+        STO.appendServices(id,service).then(data=>{
+            res.status(200).json({data});
+        }).catch(e=>{
+            res.status(400).json({e:e.message});
+        });
+    }
+    deleteServiceSTO = (req,res) =>{
+        let {id,service} = req.body;
+        STO.deleteServices(id,service).then(data=>{
+            res.status(200).json({data})
+        }).catch(e=>{
+            res.status(400).json({e:e.message});
+        })
+    };
+    cancelTaskSTO = (req,res) =>{
+        let {id} = req.body;
+        STO.cancelTask(id).then(data=>{
+            res.status(200).json({data});
+        }).catch(e=>{
+            res.status(400).json({e:e.message});
+        });
+    }
     getTasksSTO = (req,res) =>{
         let {id} = req.body;
-        
-    }
+        STO.findById(id).then(async(data_sto)=>{
+            let {location,services} = data_sto;
+            let tasks = await STO.getTasks(location,services);
+            res.status(200).json({tasks});
+            
+        }).catch(e=>{
+            res.status(400).json({e:e.message});
+        });
+    };
+    getHistoryForSTO = (req,res) =>{
+        let {id} = req.body;
+        STO.history(id).then(data=>{
+            res.status(200).json({data});
+        }).catch(e=>{
+            res.status(400).json({e:e.message});
+        });
+    };
+    getMyTasksSTO = (req,res) =>{
+        let {id} = req.body;
+        STO.getMyTask(id).then(data=>{
+            res.status(200).json(data);
+        }).catch(e=>{
+            res.status(400).json({e:e.message});
+        });
+    };
+    getInformationForTaskSTO = (req,res) =>{
+        let {id} = req.body;
+        STO.getInformationForTask(id).then(data=>{
+            res.status(200).json({data});
+        }).catch(e=>{
+            res.status(400).json({e:e.message});
+        })
+    };
+    disableAccountSTO = (req,res) =>{
+        let {app_token} = req.body
+        STO.disableAccount(app_token).then(data=>{
+            res.status(200).json({data});
+        }).catch(e=>{
+            res.status(400).json({e:e.message});
+        })
+    };
 };
 
 

@@ -10,13 +10,14 @@ router.post('/updateClient',upload.single('avatar'),Controller.updateClient);
 router.post('/updateCar',Controller.updateCar);
 router.post('/createTask',uploadTask.single('taskImage'),Controller.createTask);
 router.post('/disableAccount',Controller.disableAccountClient);
-router.delete('/deleteTask',Controller.deleteTask);
-router.post('/cancelTask',Controller.cancelTask);
-router.post('/setSTOforTask',Controller.checkSTOforTask);
+router.delete('/deleteAccount',Controller.deleteAccountClient);
+router.delete('/deleteTask',Controller.deleteTaskClient);
+router.post('/setPoint',Controller.setPointClient);
+router.post('/setSTOforTask',Controller.setSTOforTaskClient);
 router.post('/prepateToChangeNumber',Controller.prapareToChangeNumber);
 router.post('/changeNumber',Controller.changeNumber);
-router.post('/getMyTasks',Controller.getMyTask);
-router.post('/getTask',Controller.getTask);
+router.post('/getMyTasks',Controller.getMyTaskClient);
+router.post('/getTask',Controller.getTaskClient);
 router.post('/getInfoemationFromSto',Controller.getInormationForSTO)
 
 module.exports = router;

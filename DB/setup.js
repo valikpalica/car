@@ -5,7 +5,12 @@ mongoose.connect('mongodb+srv://valik:1111@cluster0.toa66.mongodb.net/?retryWrit
 const ShemaSTO = new Schema({
     name:String,
     number:String,
-    location:String,
+    location:{
+        title:String,
+        latitude:String,
+        longitude:String,
+        _id:false,
+    },
     email:{
         type:String,
         default:null,
@@ -111,13 +116,19 @@ const ShemaTask = new Schema({
         type:[{
             id_sto:String,
             cost:String,
-            preliminary:String,
+            preliminary:Boolean,
             time:String,
             place:String,
-            location:String,
+            location:{
+                title:String,
+                latitude:String,
+                longitude:String,
+                _id:false,
+            },
             number:String,
         }],
-        default:null
+        default:[],
+        _id:false
     }
 });
 
