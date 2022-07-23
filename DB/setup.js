@@ -28,7 +28,7 @@ const ShemaSTO = new Schema({
     },
     count:{
         type:Number,
-        default:0
+        default:20
     }
 });
 const ShemaCars = new Schema({

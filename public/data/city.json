@@ -2,31 +2,31 @@
     "ru":[
         {
             "text":"Киев",
-            "value":"Kyiv"
+            "value":"kyiv"
         },
         {
             "text":"Чернигов",
-            "value":"Chernihiv"
+            "value":"chernihiv"
         },
         {
             "text":"Харьков",
-            "value":"Kharkiv"
+            "value":"kharkiv"
         },
         {
             "text":"Львов",
-            "value":"Lviv"
+            "value":"lviv"
         },
         {
             "text":"Одесса",
-            "value":"Odessa"
+            "value":"odessa"
         },
         {
             "text":"Днипро",
-            "value":"Dnipro"
+            "value":"dnipro"
         },
         {
             "text":"Винница",
-            "value":"Vinnitsa"
+            "value":"vinnitsa"
         }
     ]
 }
