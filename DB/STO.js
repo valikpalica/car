@@ -48,7 +48,9 @@ class STO_DB {
         });
     });
     getTasks = (city,services) => new Promise((resolve, reject) => {
+        console.log(city,services);
         Task.find({city:city,isActive:true,services:services}).then(data=>{
+            console.log(data);
             resolve(data);
         }).catch(e=>{
             reject(e);
