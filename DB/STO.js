@@ -68,9 +68,15 @@ class STO_DB {
             reject(e);
         });
     });
-    appendServices = (id,service) => new Promise((resolve, reject) => {
-        STO.findOneAndUpdate({_id:id},{$push:{services:service}},{new:true}).then(data=>{
-            resolve(data);
+    appendServices = (id,services) => new Promise((resolve, reject) => {
+        // STO.findOneAndUpdate({_id:id},{$push:{services:service}},{new:true}).then(data=>{
+        //     resolve(data);
+        // }).catch(e=>{
+        //     reject(e);
+        // })
+
+        STO.findOneAndUpdate({_id:id},{services},{new:true}).then(data=>{
+            resolve(data)
         }).catch(e=>{
             reject(e);
         })

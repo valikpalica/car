@@ -396,8 +396,8 @@ class Controller {
         });
     };
     appendServiceSTO = (req,res) =>{
-        let {id,service} = req.body;
-        STO.appendServices(id,service).then(data=>{
+        let {id,services} = req.body;
+        STO.appendServices(id,services).then(data=>{
             res.status(200).json({data});
         }).catch(e=>{
             res.status(400).json({e:e.message});
