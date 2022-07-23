@@ -18,6 +18,6 @@ router.post('/prepateToChangeNumber',Controller.prapareToChangeNumber);
 router.post('/changeNumber',Controller.changeNumber);
 router.post('/getMyTasks',Controller.getMyTaskClient);
 router.post('/getTask',Controller.getTaskClient);
-router.post('/getInfoemationFromSto',Controller.getInormationForSTO)
+router.post('/getInormationForSTO',Controller.getInormationForSTO)
 
 module.exports = router;
