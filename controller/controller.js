@@ -423,8 +423,8 @@ class Controller {
         let {id} = req.body;
         STO.findById(id).then(async(data_sto)=>{
             console.log(data_sto);
-            let {location,services} = data_sto;
-            let tasks = await STO.getTasks(location.title,services);
+            let {city,services} = data_sto;
+            let tasks = await STO.getTasks(city,services);
             res.status(200).json({tasks});
             
         }).catch(e=>{
