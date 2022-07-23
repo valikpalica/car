@@ -5,6 +5,7 @@ mongoose.connect('mongodb+srv://valik:1111@cluster0.toa66.mongodb.net/?retryWrit
 const ShemaSTO = new Schema({
     name:String,
     number:String,
+    city:String,
     location:{
         title:String,
         latitude:String,
