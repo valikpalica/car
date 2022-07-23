@@ -150,7 +150,9 @@ class Controller {
     }
     appendClient = (req,res) =>{
         let {number} = req.body;
+        console.log(number);
         Client.findByPhone(number).then(async(data)=>{
+            console.log(data);
             if(data){
                 res.status(400).json({information:"person exist"});
             }
@@ -164,6 +166,7 @@ class Controller {
                 res.json({client,token});
             }
         }).catch(e=>{
+            console.log(e);
             res.status(400).json({e:e.message});
         })
     };
@@ -221,7 +224,6 @@ class Controller {
             res.status(400).json({e:e.message});
         })
     }
-
     updateSTO = (req,res) =>{
         let {id,data} = req.body;
         if(req.file){
