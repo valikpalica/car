@@ -215,7 +215,6 @@ class Controller {
     updateClient = (req,res) =>{
         let {id,data} = req.body;
         if(req.file){
-            console.log(req.file);
             data['avatar'] = req.file.filename;
         }
         Client.updateClient(id,data).then(data=>{
