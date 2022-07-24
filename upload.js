@@ -1,7 +1,7 @@
 const multer = require('multer');
 const paht = require('path');
-//let destination = paht.join(__dirname,'../','image');
-let destination = './image';
+let destination = paht.join(__dirname,'image');
+
 const storage = multer.diskStorage({
     destination: (req,file,cb)=>{
         console.log(`destination`);
