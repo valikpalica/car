@@ -226,7 +226,7 @@ class Controller {
     }
     updateSTO = (req,res) =>{
         let {id,data} = req.body;
-        
+        console.log(req.body);
         if(req.file){
             console.log(req.file);
             data['avatar'] = req.file.filename;
