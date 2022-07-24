@@ -226,12 +226,15 @@ class Controller {
     }
     updateSTO = (req,res) =>{
         let {id,data} = req.body;
+        
         if(req.file){
+            console.log(req.file);
             data['avatar'] = req.file.filename;
         }
         STO.update(id,data).then(data=>{
             res.status(200).json({data})
         }).catch(e=>{
+            console.log(e);
             res.status(400).json({e:e.message});
         });
     };
@@ -246,7 +249,7 @@ class Controller {
         }).catch(e=>{
             res.status(400).json({e:e.message})
         })
-    };
+    };//push notification sto
     disableAccountClient = (req,res) =>{
         let {app_token} = req.body;
         Client.disableAccount(app_token).then(data=>{
@@ -310,7 +313,7 @@ class Controller {
         }).catch(e=>{
             res.status(200).json({e:e.message});
         });
-    };
+    };//push notification sto
     prapareToChangeNumber = (req,res) =>{
         let {number,status} = req.body;
         let otp_token = otp();
@@ -394,7 +397,7 @@ class Controller {
         }).catch(e=>{
             res.status(400).json({e:e.message});
         });
-    };
+    };//push notification client
     appendServiceSTO = (req,res) =>{
         let {id,services} = req.body;
         STO.appendServices(id,services).then(data=>{
@@ -418,7 +421,7 @@ class Controller {
         }).catch(e=>{
             res.status(400).json({e:e.message});
         });
-    }
+    }//push notification client
     getTasksSTO = (req,res) =>{
         let {id} = req.body;
         STO.findById(id).then(async(data_sto)=>{

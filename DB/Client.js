@@ -100,7 +100,7 @@ class Clients {
     });
     checkSTOforTask = (id,id_sto) => new Promise((resolve, reject) => {
         Task.findOneAndUpdate({_id:id},{id_sto},{new:true}).then(async(data)=>{
-            await STO.findOneAndUpdate({_id:id_sto},{$inc:{count:1}},{new:true});
+            await STO.findOneAndUpdate({_id:id_sto},{$inc:{count:-1}},{new:true});
             resolve(data);
         }).catch(e=>{
             reject(e);
