@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const Controller = require('../controller/controller');
-const upload = require('./upload');
+const upload = require('../upload');
 const uploadTask = require('./uploadTaskImage');
 
 router.put('/appendCar',Controller.appendCar);

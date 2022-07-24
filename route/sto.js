@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Controller = require('../controller/controller');
-const upload = require('./upload');
+const upload = require('../upload');
 
 router.post('/updateSTO',upload.single('avatar'),Controller.updateSTO);
 router.post('/disableAccountSTO',Controller.disableAccountSTO);
